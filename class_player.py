@@ -1,4 +1,4 @@
-class player():
+class Player():
 	def __init__(self):
 		self.MaxHp = 10
 		self.Hp = self.MaxHp
