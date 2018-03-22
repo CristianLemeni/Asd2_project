@@ -1,7 +1,6 @@
 import time
 import sys
 import object
-import game_linked_list
 #import binar
 
 import random
