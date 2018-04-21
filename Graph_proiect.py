@@ -1,6 +1,6 @@
 def dijkstra(graph,source,destination,visited=[],distances={},predecessors={}):
     if source == destination:
-        # Se creaza drumul si se afiseaza
+        # Se creaza drumul
         path=[]
         pred=destination
         while pred != None:
