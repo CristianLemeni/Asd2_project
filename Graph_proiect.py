@@ -1,6 +1,10 @@
+import sys
+import time
+import os
+
 def dijkstra(graph,source,destination,visited=[],distances={},predecessors={}):
     if source == destination:
-        # Se creaza drumul
+        # Se creaza drumul si se afiseaza
         path=[]
         pred=destination
         while pred != None:
@@ -27,7 +31,43 @@ def dijkstra(graph,source,destination,visited=[],distances={},predecessors={}):
                 unvisited[k] = distances.get(k,float('inf'))        
         x=min(unvisited, key=unvisited.get)
         dijkstra(graph,x,destination,visited,distances,predecessors)
-        
+		
+INF = 999999999
+
+def printSolution(distGraph):
+    string = "inf"
+    nodes =distGraph.keys()
+    for n in nodes:
+        print "\t%6s"%(n),
+    print " "
+
+    for i in nodes:
+        print"%s"%(i),
+        for j in nodes:
+            if distGraph[i][j] == INF:
+                print "%10s"%(string),
+            else:
+                print "%10s"%(distGraph[i][j]),
+        print" "
+
+
+def floydWarshall(graph):
+    nodes = graph.keys()
+
+    distance = {}
+
+    for n in nodes:
+        distance[n] = {}
+
+        for k in graph[n]:
+            distance[n][k] = graph[n][k]
+
+    for k in graph[n]:
+        for i in nodes:
+            for j in nodes:
+                distance[i][j] = min(distance[i][j], distance[i][k] + distance[k][j])
+    printSolution(distance)
+
 
 
 if __name__ == "__main__":
@@ -52,6 +92,10 @@ if __name__ == "__main__":
 					'036':{'hol NV I': 1}, 'uvt Tv 1': {'hol NV I': 2}, 'uvt Tv 2': {'hol NV I': 3},
 				'hol NV II' : {'baie B': 1, 'baie F': 3, 'hol intermediar': 1, 'hol NV I': 2},
 					'baie B':{'hol NV II':1}, 'baie F':{'hol NV II':3},
-					'hol intermediar' : {'iesire': 2, 'lectoratul francez': 1, '042': 2, '043': 3, '044': 4, 'hol NV II': 1},
-						'iesire':{'hol intermediar': 2}, 'lectoratul francez':{'hol intermediar': 1}, '042': {'hol intermediar': 2}, '043': {'hol intermediar': 3}, '044':{'hol intermediar': 4}}
-	dijkstra(graph,'iesire','intrare')#graph/destinationinatie/start
+					'hol intermediar':{'iesire': 2, 'lectoratul francez': 1, '042': 2, '043': 3, '044': 4, 'hol NV II': 1},
+						'iesire':{'hol intermediar': 2}, 'lectoratul francez':{'hol intermediar': 1}, '042':{'hol intermediar': 2}, '043':{'hol intermediar': 3}, '044':{'hol intermediar': 4}}
+	
+	iesire = raw_input("Unde vrei sa ajungi? <")
+	intrare = raw_input("Unde este acum? <")
+	dijkstra(graph,iesire,intrare)#graph/destinatie/de unde pornesti
+	floydWarshall(graph)
